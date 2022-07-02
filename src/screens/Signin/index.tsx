@@ -6,16 +6,19 @@ import {
 
 
 } from "react-native";
+
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 import { ButtonIcon } from '../../components/ButtonIcon';
 import IlustrationImg from '../../assets/illustration.png';
+import { Background } from '../../components/Background';
 
 import { styles } from './styles';
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type RootStackParamList = {
     Home: undefined;
-  };
+};
 
 type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -27,35 +30,37 @@ export function SignIn() {
         navigation.navigate('Home');
     }
     return (
-        <View style={styles.container} >
+        <Background>
+            <View style={styles.container} >
+
+                <Image source={IlustrationImg}
+                    style={styles.image}
+                    resizeMode="stretch"
+                ></Image>
 
 
-            <Image source={IlustrationImg}
-                style={styles.image}
-                resizeMode="stretch"
-            ></Image>
+                <View style={styles.content}>
+                    <Text style={styles.title}>
+                        Conecte-se{`\n`}
+                        e organize suas{`\n`}
+                        jogatinas{`\n`}
 
+                    </Text>
 
-            <View style={styles.content}>
-                <Text style={styles.title}>
-                    Conecte-se{`\n`}
-                    e organize suas{`\n`}
-                    jogatinas{`\n`}
+                    <Text style={styles.subTitle}>
+                        Crie grupos para jogar seus games {`\n`}
+                        favoritos com seus amigos
+                    </Text>
 
-                </Text>
+                    <ButtonIcon
+                        title="Entrar com Discord"
+                        activeOpacity={0.7}
+                        onPress={handleSignIn}
+                    ></ButtonIcon>
+                </View>
 
-                <Text style={styles.subTitle}>
-                    Crie grupos para jogar seus games {`\n`}
-                    favoritos com seus amigos
-                </Text>
-
-                <ButtonIcon
-                    title="Entrar com Discord"
-                    activeOpacity={0.7}
-                    onPress={handleSignIn}
-                ></ButtonIcon>
             </View>
+        </Background>
 
-        </View>
     );
 }

@@ -1,27 +1,35 @@
 import React from 'react';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
-import { View, Text } from 'react-native';
+import { View, Text, Button, ButtonProps, TouchableHighlight, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { styles } from './styles';
+
 import PlayerSvg from '../../assets/player.svg';
+import CalendarSvg from '../../assets/calendar.svg';
+
+
 import { GuildIcon } from '../GuildIcon';
 import { categories } from '../../utils/category';
 import { theme } from '../../global/styles/theme';
+import { TouchableHighlightProps } from 'react-native';
 
 
 export type GuildProps = {
-    owner: true;
+    id: string,
+    name: string,
+    icon: null,
+    owner: boolean,
 }
 
 export type AppointmentProps = {
     id: string;
     guild: GuildProps;
     category: string;
-    data: string;
+    date: string;
     description: string;
 
 }
-type Props = RectButtonProps & {
+type Props = TouchableOpacityProps & {
     data: AppointmentProps;
 }
 
@@ -30,11 +38,12 @@ export function Appointment({ data, ...rest }: Props) {
     const { owner } = data.guild;
     const { primary, on } = theme.colors;
     return (
-        <RectButton  {...rest}>
+        <TouchableOpacity activeOpacity={1}  {...rest}>
             <View style={styles.container}>
                 <GuildIcon />
-               
+
                 <View style={styles.content}>
+                    {/* view header */}
                     <View style={styles.header}>
                         <Text style={styles.title}>
                             {data.guild.name}
@@ -43,20 +52,31 @@ export function Appointment({ data, ...rest }: Props) {
                             {category.title}
                         </Text>
                     </View>
-                    {/* view playrs info */}
-                    <View style={styles.playersInfo}>
-                        <PlayerSvg fill={owner ? primary : on} />
-                        <Text style={[styles.player,
-                        { color: owner ? primary : on }]}>
+                    {/* footer */}
+                    <View style={styles.footer}>
+                        <View style={styles.dateInfo}>
+                            <CalendarSvg />
+                            <Text style={styles.date}>
+                                {data.date}
+                            </Text>
+                        </View>
 
-                            {owner? 'Anfitrião': 'Visitante'}
-                        </Text>
+                        {/* view playrs info */}
+                        <View style={styles.playersInfo}>
+                            <PlayerSvg fill={owner ? primary : on} />
+                            <Text style={[styles.player,
+                            { color: owner ? primary : on }]}>
 
+                                {owner ? 'Anfitrião' : 'Visitante'}
+                            </Text>
+                            {/* fim playersInfo */}
+                        </View>
+                        {/* fim footer */}
                     </View>
                 </View>
             </View>
 
-        </RectButton>
+        </TouchableOpacity>
 
     )
 }

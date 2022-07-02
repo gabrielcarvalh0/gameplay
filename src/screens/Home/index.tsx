@@ -4,17 +4,34 @@ import {
     View,
     Text,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 import { Profile } from "../../components/Profile";
 import { ButtonAdd } from "../../components/ButtonAdd";
 import { CategorySelect } from '../../components/CategorySelect/index';
 
-
+import { Background } from '../../components/Background';
 import { styles } from './styles';
 import { ListHeader } from "../../components/ListHeader";
 import { Appointment } from "../../components/Appointment";
+import { ListDivider } from "../../components/ListDivider";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+type RootStackParamList = {
+    AppointmentDetails: undefined;
+};
+
+
+type appointmentScreenProp =
+      NativeStackNavigationProp<RootStackParamList,
+        'AppointmentDetails'>;
+
 
 export function Home() {
     const [category, setCategory] = useState('');
+
+    const navigation = useNavigation<appointmentScreenProp>();
+
 
     const appointments = [
         {
@@ -25,27 +42,41 @@ export function Home() {
                 icon: null,
                 owner: true
             },
-            category: '1', titledate: '22/06 ás 20:40h',
+            category: '1', date: '22/06 ás 20:40h',
             description: 'É hoje que vamos chegar ao challengi meus amigos queridos!'
         },
-        
+        {
+            id: '2',
+            guild: {
+                id: '2',
+                name: 'Lendários',
+                icon: null,
+                owner: true
+            },
+            category: '1', date: '22/06 ás 20:40h',
+            description: 'É hoje que vamos chegar ao challengi meus amigos queridos!'
+        },
+
     ]
 
     function handleCategorySelect(categoryId: string) {
         categoryId === category ? setCategory('') : setCategory(categoryId);
     }
-
+    function handleAppointmentsDetails() {
+        navigation.navigate('AppointmentDetails');
+    }
     return (
-        <View >
-            <View style={styles.header}>
-                <Profile></Profile>
-                <ButtonAdd></ButtonAdd>
-            </View>
+        <Background>
+            <View >
+                <View style={styles.header}>
+                    <Profile></Profile>
+                    <ButtonAdd></ButtonAdd>
+                </View>
 
-            <View>
                 <CategorySelect
                     categorySelected={category}
                     setCategory={handleCategorySelect}
+
                 />
                 <View style={styles.content}>
                     <ListHeader title="Partidas agendadas"
@@ -53,12 +84,20 @@ export function Home() {
                     {/* mais performatica lida com mais elementos em sua tela */}
                     <FlatList
                         data={appointments}
-                        keyExtractor={item=> item.id}
-                        renderItem={({item})=>(<Appointment data={item}></Appointment>)}
+                        keyExtractor={item => item.id}
+                        renderItem={({ item }) => (
+                            <Appointment
+                                data={item}
+                                onPress={handleAppointmentsDetails}
+                            />
+                        )}
+                        ItemSeparatorComponent={() => <ListDivider />}
+                        style={styles.matches}
+                        showsHorizontalScrollIndicator={false}
                     />
                 </View>
             </View>
+        </Background>
 
-        </View>
     );
 }

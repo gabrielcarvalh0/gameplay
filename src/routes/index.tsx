@@ -1,4 +1,8 @@
 import React from 'react';
+
+import { theme } from '../global/styles/theme';
+
+
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
 
@@ -11,7 +15,7 @@ export function Routes() {
         ...DefaultTheme,
         colors: {
             ...DefaultTheme.colors,
-            background: 'transparent',
+            background: theme.colors.primary,
         },
     };
     return (

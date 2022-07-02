@@ -23,15 +23,15 @@ export default function App() {
   return (
 
     // fragment, usa-se para ter varias telas
-    <>
     
-    <StatusBar barStyle={"light-content"}
-      backgroundColor="transparent"
-      translucent
-    />
-    <Routes />
+    <Background>
+      <StatusBar barStyle={"light-content"}
+        backgroundColor="transparent"
+        translucent
+      />
+      <Routes />
+    </Background>
     
-    </>
 
   );
 }
