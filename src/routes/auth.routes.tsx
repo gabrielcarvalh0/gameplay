@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from '../screens/Home';
 import { SignIn } from '../screens/Signin';
 import { AppointmentDetails } from '../screens/AppointmentDetails';
+import { AppointmentCreate } from '../screens/AppointmentCreate';
 
 
 
@@ -28,6 +29,11 @@ export function AuthRoutes() {
                 options={{ headerShown: false }}
                 name="AppointmentDetails"
                 component={AppointmentDetails}
+            />
+              <Screen
+                options={{ headerShown: false }}
+                name="AppointmentCreate"
+                component={AppointmentCreate}
             />
 
         </Navigator>

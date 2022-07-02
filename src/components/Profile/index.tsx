@@ -13,7 +13,7 @@ export function Profile() {
                         Olá,
                     </Text>
                     <Text style={styles.username}>
-                        Gabriel
+                        Herminia
                     </Text>
                 </View>
 

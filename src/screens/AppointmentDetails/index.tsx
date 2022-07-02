@@ -10,6 +10,7 @@ import BannerImg from '../../assets/banner.png';
 import { ListHeader } from '../../components/ListHeader/index';
 import { Member } from '../../components/Member';
 import { ListDivider } from '../../components/ListDivider/index';
+import { ButtonIcon } from '../../components/ButtonIcon';
 export function AppointmentDetails() {
     const mambers = [
 
@@ -30,7 +31,6 @@ export function AppointmentDetails() {
 
     return (
         <Background>
-            <View >
                 <Header
                     title="Detalhes"
                     action={
@@ -64,7 +64,10 @@ export function AppointmentDetails() {
                     ItemSeparatorComponent={() => <ListDivider />}
                     style={styles.members}
                 />
-            </View>
+                <View style={styles.footer}>
+
+                <ButtonIcon title="Entrar na partida"/>
+                </View>
         </Background>
     )
 }
