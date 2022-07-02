@@ -17,20 +17,13 @@ import { Appointment } from "../../components/Appointment";
 import { ListDivider } from "../../components/ListDivider";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-type RootStackParamList = {
-    AppointmentDetails: undefined;
-};
 
-
-type appointmentScreenProp =
-      NativeStackNavigationProp<RootStackParamList,
-        'AppointmentDetails'>;
 
 
 export function Home() {
     const [category, setCategory] = useState('');
 
-    const navigation = useNavigation<appointmentScreenProp>();
+    const navigation = useNavigation();
 
 
     const appointments = [

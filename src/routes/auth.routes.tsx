@@ -9,28 +9,28 @@ import { AppointmentDetails } from '../screens/AppointmentDetails';
 
 
 
-const Stack = createNativeStackNavigator();
+const {Navigator, Screen} = createNativeStackNavigator();
 
 export function AuthRoutes() {
     return (
-        <Stack.Navigator>
-            <Stack.Screen
+        <Navigator>
+            <Screen
                 options={{ headerShown: false, }}
                 name="SignIn"
                 component={SignIn}
             />
-            <Stack.Screen
+            <Screen
                 options={{ headerShown: false }}
                 name="Home"
                 component={Home}
             />
-            <Stack.Screen
+            <Screen
                 options={{ headerShown: false }}
                 name="AppointmentDetails"
                 component={AppointmentDetails}
             />
 
-        </Stack.Navigator>
+        </Navigator>
 
     )
 }

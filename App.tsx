@@ -1,4 +1,6 @@
 import React from "react";
+import 'react-native-reanimated';
+import 'react-native-gesture-handler';
 import { StatusBar } from "react-native";
 import { useFonts } from "expo-font";
 import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';

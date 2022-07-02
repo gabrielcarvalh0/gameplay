@@ -8,7 +8,6 @@ import {
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { ButtonIcon } from '../../components/ButtonIcon';
 import IlustrationImg from '../../assets/illustration.png';
@@ -16,15 +15,10 @@ import { Background } from '../../components/Background';
 
 import { styles } from './styles';
 
-type RootStackParamList = {
-    Home: undefined;
-};
-
-type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 
 export function SignIn() {
-    const navigation = useNavigation<homeScreenProp>()
+    const navigation = useNavigation()
     // nome handler para functions que lidam com o user
     function handleSignIn() {
         navigation.navigate('Home');
