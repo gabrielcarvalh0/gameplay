@@ -6,11 +6,16 @@ import { theme } from '../global/styles/theme';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
 
-import { AuthRoutes } from './auth.routes';
+import { AppRoutes } from './app.routes';
 import { Background } from '../components/Background/index';
+import { useAuth } from '../hooks/auth';
 
+import { SignIn } from '../screens/Signin'
 
 export function Routes() {
+
+    const { user } = useAuth();
+
     const navTheme = {
         ...DefaultTheme,
         colors: {
@@ -21,8 +26,11 @@ export function Routes() {
     return (
         <Background>
 
-            <NavigationContainer  theme={ navTheme}>
-                <AuthRoutes />
+            <NavigationContainer theme={navTheme}>
+                {user.id ?
+                    <AppRoutes />
+                    : <SignIn />
+                }
             </NavigationContainer>
 
         </Background>

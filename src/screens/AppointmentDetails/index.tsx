@@ -1,6 +1,8 @@
-import React from 'react';
-import { TouchableOpacity, View, ImageBackground, Text, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useRoute } from '@react-navigation/native';
+import { TouchableOpacity, View, ImageBackground, Text, FlatList, Alert, Share, Platform } from 'react-native';
 import { Fontisto } from '@expo/vector-icons'
+import * as Linking from 'expo-linking';
 import { Background } from '../../components/Background';
 import { Header } from '../../components/Header';
 
@@ -8,66 +10,125 @@ import { styles } from './styles';
 import { theme } from '../../global/styles/theme';
 import BannerImg from '../../assets/banner.png';
 import { ListHeader } from '../../components/ListHeader/index';
-import { Member } from '../../components/Member';
+import { Member, MemberProps } from '../../components/Member';
 import { ListDivider } from '../../components/ListDivider/index';
 import { ButtonIcon } from '../../components/ButtonIcon';
+import { AppointmentProps } from '../../components/Appointment/index';
+import { api } from '../../services/api';
+import { Loading } from '../../components/Loading';
+
+// typagem de parametros baseado nas props do appointment
+type Params = {
+    guildSelected: AppointmentProps
+}
+type GuildWidget = {
+    id: string;
+    name: string;
+    instant_invite: string;
+    members: MemberProps[];
+}
 export function AppointmentDetails() {
-    const mambers = [
+    const [widget, setWidget] = useState<GuildWidget>({} as GuildWidget);
+    // criando o loading, setando ele como verdadeiro e depois que carregar a gente setea como false
+    const [loading, setLoading] = useState(true);
+    const route = useRoute();
 
-        {
-            id: "1",
-            username: "Gabriel",
-            avatar_url: 'https:github.com/gabrielcarvalh0.png',
-            status: 'online'
-        },
-        {
-            id: "",
-            username: "Gabriel Alves",
-            avatar_url: 'https:github.com/gabrielcarvalh0.png',
-            status: 'offline'
-        },
-    ];
+    // pegando o item passado pela rota home
+    const { guildSelected } = route.params as Params;
 
+
+
+    async function fetchGuildWidget() {
+        try {
+
+            // widget é um cartao que o servidor do discord 
+            // nem todas as rotas que estao disponivel 
+
+            const response = await api.get(`/guilds/${guildSelected.guild.id}/widget.json`);
+            setWidget(response.data);
+        } catch {
+            Alert.alert('Verifique as configurações do servidor. Será que o Widget está habilitado?')
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    function handleShareInvitation() {
+        // sempre verivficar se esta ativado no discord
+        const message = Platform.OS === 'ios' ? `Junte-se a ${guildSelected.guild.name}` : widget.instant_invite;
+        if (message === null) {
+            Alert.alert('Você precisa ativar no Widget do compartilhamento')
+        } else {
+            Share.share({
+                message,
+                url: widget.instant_invite
+            });
+
+        }
+    }
+
+    function handleOpenGuild() {
+        Linking.openURL(widget.instant_invite);
+    }
+    useEffect(() => {
+        fetchGuildWidget();
+    }, [])
 
     return (
         <Background>
-                <Header
-                    title="Detalhes"
-                    action={
-                        <TouchableOpacity>
-                            <Fontisto name="share" size={24} color={theme.colors.primary} />
-                        </TouchableOpacity>
-                    }
+            <Header
+                title="Detalhes"
+                action={
+                    guildSelected.guild.owner &&
+                    <TouchableOpacity
+                        onPress={handleShareInvitation}
+                    >
+                        <Fontisto name="share" size={24} color={theme.colors.primary} />
+                    </TouchableOpacity>
+                }
 
-                />
-                <ImageBackground
-                    source={BannerImg}
-                    style={styles.banner}
-                >
-                    <View style={styles.bannerContent}>
-                        <Text style={styles.title}>Lendários</Text>
-                        <Text style={styles.subtitle}>É hoje que vamos chegar no challenge sem perder nenhuma partida.</Text>
+            />
+            <ImageBackground
+                source={BannerImg}
+                style={styles.banner}
+            >
+                <View style={styles.bannerContent}>
+                    <Text style={styles.title}>{guildSelected.guild.name}</Text>
+                    <Text style={styles.subtitle}>{guildSelected.description}</Text>
 
-                    </View>
-
-                </ImageBackground>
-                <ListHeader title="Jogadores"
-                    subtitle="Total 3" />
-
-                <FlatList
-                    data={mambers}
-
-                    keyExtractor={item => item.id}
-                    renderItem={({ item }) => (
-                        <Member data={item} />
-                    )}
-                    ItemSeparatorComponent={() => <ListDivider />}
-                    style={styles.members}
-                />
-                <View style={styles.footer}>
-
-                <ButtonIcon title="Entrar na partida"/>
                 </View>
+
+            </ImageBackground>
+            {
+                loading
+                    ?
+                    <Loading />
+                    :
+                    <>
+                        <ListHeader title="Jogadores"
+                            subtitle={`Total ${widget.members.length}`} />
+                        <FlatList
+                            data={widget.members}
+
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => (
+                                <Member data={item} />
+                            )}
+                            ItemSeparatorComponent={() => <ListDivider isCentered />}
+                            style={styles.members}
+                        />
+
+                    </>
+
+            }
+            {
+                guildSelected.guild.owner &&
+                <View style={styles.footer}>
+                    <ButtonIcon
+                        onPress={handleOpenGuild}
+                        title="Entrar na partida" />
+                </View>
+            }
         </Background>
     )
 }

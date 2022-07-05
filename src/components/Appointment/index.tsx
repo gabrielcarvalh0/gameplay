@@ -1,7 +1,9 @@
 import React from 'react';
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
-import { View, Text, Button, ButtonProps, TouchableHighlight, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+
+import { theme } from '../../global/styles/theme';
 import { styles } from './styles';
 
 import PlayerSvg from '../../assets/player.svg';
@@ -9,17 +11,10 @@ import CalendarSvg from '../../assets/calendar.svg';
 
 
 import { GuildIcon } from '../GuildIcon';
+import { GuildProps } from '../Guild';
+
 import { categories } from '../../utils/category';
-import { theme } from '../../global/styles/theme';
-import { TouchableHighlightProps } from 'react-native';
 
-
-export type GuildProps = {
-    id: string,
-    name: string,
-    icon: null,
-    owner: boolean,
-}
 
 export type AppointmentProps = {
     id: string;
@@ -34,13 +29,24 @@ type Props = TouchableOpacityProps & {
 }
 
 export function Appointment({ data, ...rest }: Props) {
-    const [category] = categories.filter(item => item.id === data.category)
+
+    const [category] = categories.filter(item => item.id === data.category);
+
+
+
     const { owner } = data.guild;
-    const { primary, on } = theme.colors;
+    const { primary, on, secondary50, secondary60 } = theme.colors;
+
     return (
         <TouchableOpacity activeOpacity={1}  {...rest}>
             <View style={styles.container}>
-                <GuildIcon />
+                <LinearGradient
+                    style={styles.guildIconContainer}
+                    colors={[secondary50, secondary60]}
+                >
+
+                    <GuildIcon guildId={data.guild.id} iconId={data.guild.icon} />
+                </LinearGradient>
 
                 <View style={styles.content}>
                     {/* view header */}
@@ -49,7 +55,9 @@ export function Appointment({ data, ...rest }: Props) {
                             {data.guild.name}
                         </Text>
                         <Text style={styles.category}>
-                            {category.title}
+                            {
+                                category != undefined ? category.title : 'Nada'
+                            }
                         </Text>
                     </View>
                     {/* footer */}

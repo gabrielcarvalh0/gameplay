@@ -1,19 +1,42 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { styles } from './styles';
 import { Avatar } from '../Avatar/index';
+import { useAuth } from '../../hooks/auth';
 
 export function Profile() {
+    const { user, signOut } = useAuth();
+
+
+
+    function handleSignOut() {
+        Alert.alert('Logout', 'Deseja sair do Game?',
+
+            [
+                {
+                    text: 'Não',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Sim',
+                    onPress: () => signOut()
+                }
+            ]
+        )
+    }
     return (
         <View style={styles.container}>
-            <Avatar urlImage={'https://github.com/gabrielcarvalh0.png'} />
+            <TouchableOpacity onPress={handleSignOut}>
+
+                <Avatar urlImage={user.avatar} />
+            </TouchableOpacity>
             <View>
                 <View style={styles.user}>
                     <Text style={styles.greeting}>
                         Olá,
                     </Text>
                     <Text style={styles.username}>
-                        Herminia
+                        {user.username}
                     </Text>
                 </View>
 

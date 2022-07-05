@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    date:{
+    date: {
         fontFamily: theme.fonts.text500,
         color: theme.colors.heading,
         fontSize: 13,
@@ -56,8 +56,15 @@ export const styles = StyleSheet.create({
         marginRight: 24,
 
     },
-   
-    name: {},
+
+    guildIconContainer: {
+        width: 68,
+        height: 64,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 20
+    },
 
 
 })

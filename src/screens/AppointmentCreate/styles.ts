@@ -6,9 +6,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    containerScroll: {
-        backgroundColor: theme.colors.secondary100
-    },
+ 
     label: {
 
         fontSize: 18,
@@ -44,7 +42,8 @@ export const styles = StyleSheet.create({
     image: {
         width: 64,
         height: 68,
-        backgroundColor: theme.colors.secondary50,
+        backgroundColor: theme.colors.secondary40,
+        borderColor: theme.colors.secondary50,
         borderWidth: 1,
         borderRadius: 8,
     },

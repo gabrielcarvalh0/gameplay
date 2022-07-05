@@ -40,7 +40,7 @@ export function Header({ title, action }: Props) {
         >
             <TouchableOpacity onPress={handleGoBack}>
 
-                <Feather 
+                <Feather
                     name="arrow-left"
                     size={24}
                     color={heading}
@@ -54,9 +54,16 @@ export function Header({ title, action }: Props) {
                 {title}
             </Text>
 
-            <View>
-                {action}
-            </View>
+            {/* condição para saber se tem ou não o icone, fazendo com que continue alinhado */}
+            {
+                action
+                    ?
+                    <View>
+                        {action}
+                    </View>
+                    :
+                    <View style={{ width: 24 }} />
+            }
 
         </LinearGradient>
 
