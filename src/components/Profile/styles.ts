@@ -4,7 +4,7 @@ import { theme } from '../../global/styles/theme';
 
 export const styles = StyleSheet.create({
 
-    container: {     
+    container: {
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -24,8 +24,15 @@ export const styles = StyleSheet.create({
         color: theme.colors.heading,
     },
     message: {
-       fontFamily: theme.fonts.text400,
-       color: theme.colors.highlight
+        fontFamily: theme.fonts.text400,
+        color: theme.colors.highlight
+    },
+    signOut: {
+        flex: 1,
+        width: '100%',
+        paddingVertical: 24,
+        paddingHorizontal: 24,
+        
     }
 
 

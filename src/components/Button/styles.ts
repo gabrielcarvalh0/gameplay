@@ -17,6 +17,15 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center'
   },
- 
+  line:{
+    width: '100%',
+    height: 56,
+    backgroundColor: theme.colors.secondary100,
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center'
+  }
 
 });

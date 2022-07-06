@@ -13,11 +13,12 @@ import { styles } from './styles';
     
 type Props = TouchableOpacityProps &{
     title: string,
+    isLine?: boolean,
 }
 
-export function Button({ title, ...rest }: Props) {
+export function Button({ title, isLine, ...rest }: Props) {
     return (
-        <TouchableOpacity  style={styles.container} {...rest}>
+        <TouchableOpacity  style={[isLine ? styles.line : styles.container]} {...rest}>
             
             <Text style={styles.title}>
                 {title}

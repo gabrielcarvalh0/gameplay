@@ -7,12 +7,13 @@ import { styles } from './styles';
 type Props = ModalProps & {
     children: ReactNode;
     closeModal: () => void;
+    mode?: boolean;
 }
 
 
 
 export function ModalView({ children
-    , closeModal,
+    , closeModal, mode,
     ...rest }: Props) {
 
     return (
@@ -28,7 +29,17 @@ export function ModalView({ children
             <TouchableWithoutFeedback onPress={closeModal}>
 
                 <View style={styles.overlay}>
-                    <View style={styles.container}>
+                    <View
+
+                        style={[styles.container,
+                        mode ? {
+                            marginTop: 450
+                        } : {
+                            marginTop: 100,
+
+                        }]
+                        }
+                    >
                         <Background>
                             <View style={styles.bar} />
                             {children}
