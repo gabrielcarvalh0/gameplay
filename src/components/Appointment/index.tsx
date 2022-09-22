@@ -15,7 +15,7 @@ import { GuildProps } from '../Guild';
 
 import { categories } from '../../utils/category';
 
-
+import { RectButton, RectButtonProps } from 'react-native-gesture-handler'
 export type AppointmentProps = {
     id: string;
     guild: GuildProps;
